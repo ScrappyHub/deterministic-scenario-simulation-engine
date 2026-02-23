@@ -3,3 +3,7 @@
 # scratch patchers
 scripts/_scratch/
 
+
+# build/run outputs
+_out/
+
