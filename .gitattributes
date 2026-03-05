@@ -1,11 +1,1 @@
-﻿# Enforce LF in repo (working tree may vary; this keeps commits stable)
-* text=auto eol=lf
-
-# PowerShell scripts should be LF
-*.ps1 text eol=lf
-
-# JSON/NDJSON/text should be LF
-*.json  text eol=lf
-*.ndjson text eol=lf
-*.txt   text eol=lf
-*.md    text eol=lf
+# DSSE: canonical bytes discipline (LF only) ? do not let git rewrite evidence* text=auto eol=lf# Evidence / vectors must never be EOL-normalized by accident*.ndjson -text*.json   -text*.txt    -text*.sig    -text# Scripts are LF*.ps1 text eol=lf*.md  text eol=lf

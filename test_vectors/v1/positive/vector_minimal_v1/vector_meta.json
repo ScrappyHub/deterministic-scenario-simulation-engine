@@ -1,0 +1,1 @@
+{"expected":{"scenario_manifest_sha256":"sha256:25bc23831c151380cbf01412bd23f810662f22db340a4aaebdc4b5b33956fda5","transcript_sha256":"sha256:21f01d24ae51063a66a052e66dce866dc137d7c71cce3d1c629c203fa44ff448"},"kind":"positive","scenario_manifest":"scenario_manifest.json","schema":"dsse.vector.meta.v1","vector_id":"vector_minimal_v1"}

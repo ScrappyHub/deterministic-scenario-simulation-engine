@@ -1,0 +1,1 @@
+{"expected_fail_token":"REPLAY_FAIL: TRANSCRIPT_HASH_MISMATCH","kind":"negative","scenario_manifest":"scenario_manifest.json","schema":"dsse.vector.meta.v1","vector_id":"neg_tamper_transcript_v1"}

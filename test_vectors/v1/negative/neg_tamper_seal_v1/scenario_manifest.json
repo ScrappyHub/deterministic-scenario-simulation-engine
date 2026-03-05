@@ -1,0 +1,1 @@
+{"models":{"adversary":{"corrupt_device_idx":[7],"kind":"static_set.v1"},"packet_loss":{"kind":"bernoulli.v1","p":0.1},"timing":{"dt_ms":1000,"kind":"tick.v1"}},"output":{"seal":"seal.json","transcript":"transcript.ndjson"},"schema":"dsse.scenario.manifest.v1","seed_u64":"0x0123456789abcdef","world":{"device_count":25,"ticks":4}}
