@@ -1,0 +1,10 @@
+SELFTEST_OK: DSSE v1 deterministic run+seal+replay PASS
+transcript_sha256=sha256:d83d1de1979314c33f31d54bedb4a27bc011d9ab7d1682ce6a4624755546741f
+
+VECTOR_OK: vector_minimal_v1
+VECTOR_NEG_OK: neg_manifest_mismatch_v1
+VECTOR_NEG_OK: neg_tamper_seal_v1
+VECTOR_NEG_OK: neg_tamper_transcript_v1
+DSSE_VECTORS_ALL_GREEN
+
+DSSE_STRESS_OK: runs=10 transcript_sha256=sha256:17d350cb132aed09b5831936881f852e8ee02115abeca7b51bda16eead6a8397
