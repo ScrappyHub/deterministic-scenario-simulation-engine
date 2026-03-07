@@ -24,19 +24,16 @@ $stdout = New-Object System.Collections.Generic.List[string]
 & $ps -NoProfile -NonInteractive -ExecutionPolicy Bypass -File $selftest -RepoRoot $RepoRoot 2>&1 | Tee-Object -Variable o1 | Out-Host
 $s1 = (($o1 | ForEach-Object { [string]$_ }) -join "`n")
 [void]$stdout.Add($s1)
-& $ps -NoProfile -NonInteractive -ExecutionPolicy Bypass -File $receipt -RepoRoot $RepoRoot -EventType "selftest" -Ok $true -Token "SELFTEST_OK" | Out-Host
 & $ps -NoProfile -NonInteractive -ExecutionPolicy Bypass -File $vectors -RepoRoot $RepoRoot 2>&1 | Tee-Object -Variable o2 | Out-Host
 $s2 = (($o2 | ForEach-Object { [string]$_ }) -join "`n")
 [void]$stdout.Add($s2)
-& $ps -NoProfile -NonInteractive -ExecutionPolicy Bypass -File $receipt -RepoRoot $RepoRoot -EventType "vectors" -Ok $true -Token "DSSE_VECTORS_ALL_GREEN" | Out-Host
 & $ps -NoProfile -NonInteractive -ExecutionPolicy Bypass -File $stress -RepoRoot $RepoRoot -Runs 10 2>&1 | Tee-Object -Variable o3 | Out-Host
 $s3 = (($o3 | ForEach-Object { [string]$_ }) -join "`n")
 [void]$stdout.Add($s3)
 $sha = ""
 foreach($line in @($o3)){ $sl = [string]$line; if($sl -like "DSSE_STRESS_OK:*transcript_sha256=*"){ $sha = $sl.Substring($sl.IndexOf("transcript_sha256=") + 18); break } }
-& $ps -NoProfile -NonInteractive -ExecutionPolicy Bypass -File $receipt -RepoRoot $RepoRoot -EventType "stress" -Ok $true -Token "DSSE_STRESS_OK" -TranscriptSha256 $sha | Out-Host
 $allOut = (($stdout.ToArray()) -join "`n`n")
 Write-Utf8NoBomLf -Path (Join-Path $bundle "stdout.txt") -Text $allOut
 Write-Utf8NoBomLf -Path (Join-Path $bundle "status.txt") -Text "DSSE_TIER0_ALL_GREEN" 
-& $ps -NoProfile -NonInteractive -ExecutionPolicy Bypass -File $receipt -RepoRoot $RepoRoot -EventType "tier0_runner" -Ok $true -Token "DSSE_TIER0_ALL_GREEN" -RunDir $bundle | Out-Host
+& $ps -NoProfile -NonInteractive -ExecutionPolicy Bypass -File $receipt -RepoRoot $RepoRoot -EventType "tier0_runner" -Ok 1 -Token "DSSE_TIER0_ALL_GREEN" -RunDir $bundle | Out-Host
 Write-Host "DSSE_TIER0_ALL_GREEN" -ForegroundColor Green
