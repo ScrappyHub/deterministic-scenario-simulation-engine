@@ -1,0 +1,9 @@
+DSSE Tier-0 Receipt Summary
+
+schema        : dsse.receipt.v1
+event_type    : tier0_runner
+ok            : True
+token         : DSSE_TIER0_ALL_GREEN
+run_dir       : C:\dev\dsse\proofs\runs\dsse_tier0_latest
+stdout_sha256 : sha256:a347889ad3faaf2251cef39d9e26fcb6f9dbf5038ce7620610f9bfc986bf605e
+status_sha256 : sha256:f27ab4d5f618c95f79bf6f3e5905ffc6243adfcff7d6f7cb43bcf1215df5dc07
