@@ -1,3 +1,7 @@
+## DSSE
+
+---
+
 DSSE generates simulation transcripts from a pinned scenario manifest, seals the results with cryptographic hashes, and allows independent verification without modifying artifacts.
 
 Key capabilities:
