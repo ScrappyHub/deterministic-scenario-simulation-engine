@@ -1,232 +1,127 @@
-\# DSSE
+## DSSE
 
+---
 
+DSSE generates simulation transcripts from a pinned scenario manifest, seals the results with cryptographic hashes, and allows independent verification without modifying artifacts.
 
-Deterministic Scenario / Simulation Engine (DSSE)
+Key capabilities:
 
+- Deterministic execution from fixed inputs
+- Canonical JSON transcripts
+- SHA-256 sealing of runs
+- Non-mutating replay verification
+- Golden test vectors
+- Deterministic receipt generation
+- Freeze manifests for release integrity
 
+---
 
-DSSE produces reproducible simulation transcripts from a pinned scenario manifest.  
+## Core artifacts
 
-Runs are sealed with SHA-256, enabling independent replay verification without modifying original artifacts.
-
-
-
-\---
-
-
-
-\## Overview
-
-
-
-DSSE is designed for deterministic execution:
-
-
-
-\- Same inputs → identical outputs
-
-\- Canonical serialization → stable hashing
-
-\- Replay verification → trust without mutation
-
-
-
-\---
-
-
-
-\## Core artifacts
-
-
-
-\### Scenario manifest
-
-
+### Scenario manifest
 
 `dsse.scenario.manifest.v1`
-
-
 
 Defines simulation inputs.
 
 
-
-\- `seed\_u64`: `0x` + 16 hex characters
-
+seed_u64 = 0x + 16 hex characters
 
 
-\---
+---
 
-
-
-\### Transcript
-
-
+### Transcript
 
 `transcript.ndjson`
 
+Each line is canonical JSON:
 
 
-\- One canonical JSON object per line  
-
-\- Schema: `dsse.transcript.event.v1`  
-
-\- Each event includes `event\_hash`
+dsse.transcript.event.v1
 
 
+Each event includes a deterministic `event_hash`.
 
-\---
+---
 
-
-
-\### Run seal
-
-
+### Run seal
 
 `seal.json`
 
 
-
-Schema: `dsse.run.seal.v1`
-
+dsse.run.seal.v1
 
 
 Contains:
 
 
-
-\- `scenario\_manifest\_sha256`
-
-\- `transcript\_sha256`
+scenario_manifest_sha256
+transcript_sha256
 
 
+---
 
-This binds the transcript to the exact inputs used.
+### Replay verification
 
+Verification recomputes hashes and validates the seal.
 
+This process is **non-mutating** — no files are modified.
 
-\---
+---
 
-
-
-\### Replay verification
-
-
-
-Verification recomputes:
-
-
-
-\- manifest hash
-
-\- transcript hash
-
-
-
-Then compares against the seal.
-
-
-
-Verification is \*\*non-mutating\*\*.
-
-
-
-\---
-
-
-
-\## Repository layout
-
-
-
+## Repository layout
 
 
 scripts/
-
-\_dsse\_runtime\_v1.ps1 runtime library (run, seal, replay verify)
-
-\_selftest\_dsse\_v1.ps1 deterministic selftest
-
-
+_dsse_runtime_v1.ps1 runtime (run + seal + replay verify)
+_selftest_dsse_v1.ps1 deterministic self-test
 
 schemas/
-
 JSON schemas
 
-
-
-test\_vectors/
-
-simulation test scenarios
-
-
+test_vectors/
+deterministic validation scenarios
 
 proofs/
+receipts, runs, and verification artifacts
 
-receipts and execution evidence
-
-
-
-\_out/
-
+_out/
 local outputs (ignored)
 
+scripts/_scratch/
+temporary patch scripts (ignored)
 
 
-scripts/\_scratch/
+---
 
-temporary scripts (ignored)
-
-
-
-
-
-\---
-
-
-
-\## Run the self-test
-
-
+## Run the self-test
 
 ```powershell
-
 powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass `
-
-&#x20; -File C:\\dev\\dsse\\scripts\\\_selftest\_dsse\_v1.ps1 `
-
-&#x20; -RepoRoot C:\\dev\\dsse
-
+  -File C:\dev\dsse\scripts\_selftest_dsse_v1.ps1 `
+  -RepoRoot C:\dev\dsse
 Determinism guarantees
-
-
 
 DSSE enforces strict reproducibility:
 
-
-
 Windows PowerShell 5.1
-
-Set-StrictMode -Version Latest
-
-$ErrorActionPreference = "Stop"
-
+Set-StrictMode Latest
+$ErrorActionPreference = Stop
 UTF-8 (no BOM) + LF line endings
-
-Canonical JSON for all hashed data
-
-SHA-256 over canonical bytes
-
-
+Canonical JSON encoding
+SHA-256 hashing over canonical bytes
 
 Execution model:
 
+write → parse-gate → execute via child powershell.exe -File
+Status
 
+Stable deterministic engine with:
 
-write → parse → execute (child powershell.exe)
+replay verification
+vector validation
+stress harness
+receipt generation
+freeze manifest support
 
-
-
-These constraints ensure identical results across independent environments.
-
+---
